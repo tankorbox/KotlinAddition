@@ -7,7 +7,7 @@ import android.support.annotation.Nullable
  */
 interface AdapterObserver<T> {
 
-    fun setItems (@Nullable items: List<T>)
+    fun setItems (items: List<T>?)
 
     fun getItems(): List<T>
 

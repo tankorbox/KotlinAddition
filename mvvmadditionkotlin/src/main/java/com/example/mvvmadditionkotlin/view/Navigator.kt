@@ -7,7 +7,7 @@ import android.os.Bundle
  */
 
 interface Navigator {
-    fun configure(pageKey: Int, pageClass: Class<Any>)
+    fun configure(pageKey: Int, pageClass: Class<*>)
 
     fun getApplication() : MVVMApplication
 

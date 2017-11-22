@@ -1,6 +1,9 @@
-package com.example.honglinh.test
+package com.example.honglinh.test.view
 
 import android.os.Bundle
+import com.example.honglinh.test.AppConfig
+import com.example.honglinh.test.BR
+import com.example.honglinh.test.R
 import com.example.honglinh.test.databinding.ActivityMainBinding
 import com.example.honglinh.test.viewmodel.MainViewModel
 import com.example.mvvmadditionkotlin.view.MVVMActivity

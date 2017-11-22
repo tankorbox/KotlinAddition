@@ -23,9 +23,10 @@ import javax.inject.Inject
 open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplication) : Navigator {
 
     private var mBusyIndicator: BusyIndicator? = null
-    private var mPages: SparseArray<Class<Any>> = SparseArray()
+    private var mPages: SparseArray<Class<*>> = SparseArray()
 
-    override fun configure(pageKey: Int, pageClass: Class<Any>) {
+    override fun configure(pageKey: Int, pageClass: Class<*>) {
+        Log.i("tag1", pageClass.toString())
         mPages.put(pageKey, pageClass)
     }
 
@@ -34,8 +35,9 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     }
 
     override fun getCurrentKey(): Int {
-        val currentClass: Class<Any> = mApplication.currentActivity.javaClass
+        val currentClass: Class<*> = mApplication.currentActivity::class.java
         val valueIndex = mPages.indexOfValue(currentClass)
+        Log.i("tag1","passed" + valueIndex)
         return mPages.keyAt(valueIndex)
     }
 
@@ -74,7 +76,7 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity: Activity? = mApplication.currentActivity
             currentActivity?.apply {
-                val targetClass: Class<Any> = mPages.get(pageKey)
+                val targetClass = mPages.get(pageKey)
                 val intent = Intent(currentActivity, targetClass)
                 ActivityCompat.startActivity(currentActivity, intent, null)
             }
@@ -85,7 +87,7 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity: Activity? = mApplication.currentActivity
             currentActivity?.apply {
-                val targetClass: Class<Any> = mPages.get(pageKey)
+                val targetClass: Class<*> = mPages.get(pageKey)
                 val intent = Intent(currentActivity, targetClass)
                 ActivityCompat.startActivityForResult(currentActivity, intent, requestCode, null)
             }
@@ -96,7 +98,7 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity: Activity? = mApplication.currentActivity
             currentActivity?.apply {
-                val targetClass: Class<Any> = mPages.get(pageKey)
+                val targetClass: Class<*> = mPages.get(pageKey)
                 val intent = Intent(currentActivity, targetClass)
                 intent.putExtras(bundle)
                 ActivityCompat.startActivity(currentActivity, intent, null)
@@ -121,50 +123,45 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     override fun showMessage(title: String, message: String, buttonText: String, callback: Callback) {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            currentActivity?.apply {
-                AlertDialog.Builder(currentActivity)
-                        .setMessage(message)
-                        .setTitle(title)
-                        .setNegativeButton(buttonText) { dialogInterface, _ ->
-                            callback.onResult(false)
-                            dialogInterface.dismiss()
-                        }
-                        .show()
-            }
+            AlertDialog.Builder(currentActivity)
+                    .setMessage(message)
+                    .setTitle(title)
+                    .setNegativeButton(buttonText) { dialogInterface, _ ->
+                        callback.onResult(false)
+                        dialogInterface.dismiss()
+                    }
+                    .show()
         }
     }
 
     override fun showMessage(title: String, message: String, buttonConfirmText: String, buttonCancelText: String, callback: Callback) {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            currentActivity?.apply {
-                AlertDialog.Builder(currentActivity)
-                        .setMessage(message)
-                        .setTitle(title)
-                        .setPositiveButton(buttonConfirmText) { dialogInterface, _ ->
+            AlertDialog.Builder(currentActivity)
+                    .setMessage(message)
+                    .setTitle(title)
+                    .setPositiveButton(buttonConfirmText) { dialogInterface, _ ->
 
-                            callback.onResult(true)
+                        callback.onResult(true)
 
-                            dialogInterface.dismiss()
-                        }
-                        .setNegativeButton(buttonCancelText) { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton(buttonCancelText) { dialogInterface, _ ->
 
-                            callback.onResult(false)
+                        callback.onResult(false)
 
-                            dialogInterface.dismiss()
-                        }
-                        .show()
-            }
+                        dialogInterface.dismiss()
+                    }
+                    .show()
+
         }
     }
 
     override fun showBusyIndicator() {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            currentActivity?.apply {
-                mBusyIndicator = BusyIndicator(currentActivity)
-                mBusyIndicator!!.show()
-            }
+            mBusyIndicator = BusyIndicator(currentActivity)
+            mBusyIndicator!!.show()
         }
     }
 

@@ -11,15 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.mvvmadditionkotlin.viewmode.ViewModel
 import org.greenrobot.eventbus.EventBus
-import javax.inject.Inject
 
 /**
  * Created by HoàngLinh on 11/14/2017.
  */
 
-
 abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : android.support.v4.app.Fragment() {
-
     var viewModel: V? = null
         protected set
     var binding: B? = null
@@ -112,7 +109,7 @@ abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : android.suppor
                 .postSticky(any)
     }
 
-    protected fun removeSticky(any : Any) {
+    protected fun removeSticky(any: Any) {
         EventBus.getDefault().removeStickyEvent(any)
     }
 

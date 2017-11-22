@@ -5,7 +5,6 @@ import android.app.Application
 import android.os.Bundle
 import android.support.multidex.MultiDexApplication
 import java.lang.ref.SoftReference
-import javax.inject.Inject
 
 /**
  * Created by HoàngLinh on 11/14/2017.

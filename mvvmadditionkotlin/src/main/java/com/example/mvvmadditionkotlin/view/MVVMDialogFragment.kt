@@ -17,23 +17,20 @@ import javax.inject.Inject
  * Created by HoàngLinh on 11/14/2017.
  */
 
-open class MVVMDialogFragment<out B : ViewDataBinding,out V : ViewModel> : DialogFragment() {
+open class MVVMDialogFragment<out B : ViewDataBinding,V : ViewModel> : DialogFragment() {
     private lateinit var mViewDataBinding: B
 
-    private lateinit var mViewModel: V
+    @JvmField @Inject
+    var mViewModel: V? = null
 
     fun getViewDataBinding(): B {
         return mViewDataBinding
     }
 
-    fun getViewModel(): V {
-        return mViewModel
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel?.apply {
-            mViewModel.onCreate()
+            mViewModel!!.onCreate()
         }
     }
 
@@ -51,7 +48,7 @@ open class MVVMDialogFragment<out B : ViewDataBinding,out V : ViewModel> : Dialo
         super.onResume()
 
         mViewModel?.apply {
-            mViewModel.onStart()
+            mViewModel!!.onStart()
         }
     }
 
@@ -59,7 +56,7 @@ open class MVVMDialogFragment<out B : ViewDataBinding,out V : ViewModel> : Dialo
         super.onPause()
 
         mViewModel?.apply {
-            mViewModel.onStop()
+            mViewModel!!.onStop()
         }
     }
 
@@ -67,7 +64,7 @@ open class MVVMDialogFragment<out B : ViewDataBinding,out V : ViewModel> : Dialo
         super.onDestroy()
 
         mViewModel?.apply {
-            mViewModel.onDestroy()
+            mViewModel!!.onDestroy()
         }
     }
 
@@ -84,7 +81,7 @@ open class MVVMDialogFragment<out B : ViewDataBinding,out V : ViewModel> : Dialo
     }
 
     private fun scaleSize(width: Int, height: Int) {
-        val dialog: Dialog = dialog
+        val dialog: Dialog? = dialog
         if (dialog?.window != null) {
             dialog.window.setLayout(width, height)
         }

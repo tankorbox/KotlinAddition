@@ -8,13 +8,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import com.example.mvvmadditionkotlin.viewmode.ViewModel
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * Created by HoàngLinh on 11/14/2017.
@@ -22,7 +20,8 @@ import javax.inject.Named
 
 abstract class MVVMActivity<B : ViewDataBinding, V : ViewModel> : AppCompatActivity() {
 
-    @JvmField @Inject
+    @JvmField
+    @Inject
     var mViewModel: V? = null
 
     var toolbar: Toolbar? = null
@@ -123,7 +122,7 @@ abstract class MVVMActivity<B : ViewDataBinding, V : ViewModel> : AppCompatActiv
     private fun setTitle(resId: Int, title: String) {
         setTitle("")
 
-        val textView: TextView = findViewById(resId)
+        val textView: TextView? = findViewById(resId)
         if (textView != null) {
             textView.text = title
         }

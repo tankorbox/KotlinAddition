@@ -24,7 +24,7 @@ abstract class RecyclerViewAdapter<T> : RecyclerView.Adapter<ViewHolder<*>>(), A
         return if (mItems != null) mItems!!.size else 0
     }
 
-    override fun setItems(items: List<T>) {
+    override fun setItems(items: List<T>?) {
         if (mItems === items) {
             return
         }
