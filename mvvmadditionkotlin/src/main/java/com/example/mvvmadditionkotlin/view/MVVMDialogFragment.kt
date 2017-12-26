@@ -29,43 +29,31 @@ open class MVVMDialogFragment<out B : ViewDataBinding,V : ViewModel> : DialogFra
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel?.apply {
-            mViewModel!!.onCreate()
-        }
+        mViewModel?.onCreate()
     }
 
 
     @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window?.apply {
-            dialog.window.requestFeature(Window.FEATURE_NO_TITLE)
-        }
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return dialog
     }
 
     override fun onResume() {
         super.onResume()
-
-        mViewModel?.apply {
-            mViewModel!!.onStart()
-        }
+        mViewModel?.onStart()
     }
 
     override fun onPause() {
         super.onPause()
 
-        mViewModel?.apply {
-            mViewModel!!.onStop()
-        }
+        mViewModel?.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        mViewModel?.apply {
-            mViewModel!!.onDestroy()
-        }
+        mViewModel?.onDestroy()
     }
 
     protected fun setBindingContentView(inflater: LayoutInflater, container: ViewGroup, layoutResId: Int, variableId: Int) {
@@ -82,9 +70,8 @@ open class MVVMDialogFragment<out B : ViewDataBinding,V : ViewModel> : DialogFra
 
     private fun scaleSize(width: Int, height: Int) {
         val dialog: Dialog? = dialog
-        if (dialog?.window != null) {
-            dialog.window.setLayout(width, height)
-        }
+        dialog?.window?.setLayout(width, height)
+
     }
 
     protected fun register() {

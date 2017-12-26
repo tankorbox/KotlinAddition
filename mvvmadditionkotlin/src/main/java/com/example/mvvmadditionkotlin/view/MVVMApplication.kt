@@ -12,10 +12,9 @@ import java.lang.ref.SoftReference
 
 abstract class MVVMApplication : MultiDexApplication(), Application.ActivityLifecycleCallbacks {
 
-    private var mWeakActivity: SoftReference<Activity>? = null
+    private var mWeakActivity: SoftReference<Activity?>? = null
 
-    var currentActivity: Activity
-        get() = mWeakActivity!!.get()!!
+    var currentActivity: Activity? = null
         set(activity) {
             if (mWeakActivity == null) {
                 mWeakActivity = SoftReference(activity)

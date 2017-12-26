@@ -5,54 +5,49 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.mvvmadditionkotlin.viewmode.ViewModel
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 /**
  * Created by HoàngLinh on 11/14/2017.
  */
 
-abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : android.support.v4.app.Fragment() {
+abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : Fragment() {
+    @JvmField
+    @Inject
     var viewModel: V? = null
-        protected set
+
     var binding: B? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-
-        viewModel?.apply {
-            viewModel!!.onCreate()
-        }
+        viewModel?.onCreate()
     }
 
     override fun onResume() {
         super.onResume()
 
-        viewModel?.apply {
-            viewModel!!.onStart()
-        }
+        viewModel?.onStart()
     }
 
     override fun onPause() {
         super.onPause()
 
-        viewModel?.apply {
-            viewModel!!.onStop()
-        }
+        viewModel?.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        viewModel?.apply {
-            viewModel!!.onDestroy()
-        }
+        viewModel?.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -64,9 +59,7 @@ abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : android.suppor
     override fun onLowMemory() {
         super.onLowMemory()
 
-        viewModel?.apply {
-            viewModel!!.onLowMemory()
-        }
+        viewModel?.onLowMemory()
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -76,9 +69,7 @@ abstract class MVVMFragment<B : ViewDataBinding, V : ViewModel> : android.suppor
 
     protected fun setBindingContentView(inflater: LayoutInflater, container: ViewGroup?, layoutResId: Int, variableId: Int) {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding?.apply {
-            binding!!.setVariable(variableId, viewModel)
-        }
+        binding?.setVariable(variableId, viewModel)
     }
 
     protected fun showMessage(message: String) {

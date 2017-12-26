@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 
 /**
  * Created by HoàngLinh on 11/14/2017.
@@ -57,8 +58,10 @@ abstract class RecyclerViewAdapter<T> : RecyclerView.Adapter<ViewHolder<*>>(), A
 
     companion object {
         @Suppress("UNCHECKED_CAST")
+        @JvmStatic
         @BindingAdapter(value = *arrayOf("items"))
-        fun <T> setAdapter(recyclerView: RecyclerView, items: List<T>) {
+        fun <T> setAdapter(recyclerView: RecyclerView, items: List<T>?) {
+            if (items==null) Log.i("tag1", "null list")
             if (recyclerView.adapter is AdapterObserver<*>) {
                 val adapter = recyclerView.adapter as AdapterObserver<T>
                 adapter.setItems(items)

@@ -31,33 +31,22 @@ abstract class MVVMActivity<B : ViewDataBinding, V : ViewModel> : AppCompatActiv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (mViewModel != null) {
-            mViewModel!!.onCreate()
-        }
+        mViewModel?.onCreate()
     }
 
     override fun onResume() {
         super.onResume()
-
-        if (mViewModel != null) {
-            mViewModel!!.onStart()
-        }
+        mViewModel?.onStart()
     }
 
     override fun onPause() {
-        if (mViewModel != null) {
-            mViewModel!!.onStop()
-        }
-
+        mViewModel?.onStop()
         super.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (mViewModel != null) {
-            mViewModel!!.onDestroy()
-        }
+        mViewModel?.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -68,10 +57,7 @@ abstract class MVVMActivity<B : ViewDataBinding, V : ViewModel> : AppCompatActiv
 
     override fun onLowMemory() {
         super.onLowMemory()
-
-        if (mViewModel != null) {
-            mViewModel!!.onLowMemory()
-        }
+        mViewModel?.onLowMemory()
     }
 
     //endregion
@@ -157,7 +143,6 @@ abstract class MVVMActivity<B : ViewDataBinding, V : ViewModel> : AppCompatActiv
     }
 
     companion object {
-
         init {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }

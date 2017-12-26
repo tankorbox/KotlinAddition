@@ -1,34 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.example.honglinh.test.viewmodel.MainViewModel" />
+            name="viewModel"
+            type="com.example.honglinh.test.viewmodel.main.MainViewModel" />
     </data>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewmodel.message}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()-> viewmodel.goToPeopleActivity()}"
-            android:text="Enter" />
+        <RelativeLayout
+            android:id="@+id/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-    </LinearLayout>
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/bottom_navigation_background"
+                android:elevation="4dp"
+                android:focusableInTouchMode="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/searchView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_searchview"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_search_black_24dp"
+                        android:hint="@string/search_edittext"
+                        android:maxLength="50"
+                        android:maxLines="1"
+                        android:onTextChanged="@{(text, start, before, count)-> viewModel.onTextChanged(text)}"
+                        android:paddingEnd="0dp"
+                        android:paddingStart="5dp"
+                        android:textAlignment="center" />
+
+                    <ProgressBar
+                        isVisibleOrInvisible="@{viewModel.isLoading.get()}"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp" />
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/navigationBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:itemBackground="@color/bottom_navigation_background"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
+                app:menu="@menu/bottom_navigation">
+
+            </android.support.design.widget.BottomNavigationView>
+
+            <FrameLayout
+                android:id="@+id/frContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/navigationBottom"
+                android:layout_below="@+id/tool_bar"
+                android:background="#E5E5E5">
+
+            </FrameLayout>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

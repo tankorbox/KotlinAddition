@@ -35,9 +35,9 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     }
 
     override fun getCurrentKey(): Int {
-        val currentClass: Class<*> = mApplication.currentActivity::class.java
+        val currentClass: Class<*> = mApplication.currentActivity!!::class.java
         val valueIndex = mPages.indexOfValue(currentClass)
-        Log.i("tag1","passed" + valueIndex)
+        Log.i("tag1", "passed" + valueIndex)
         return mPages.keyAt(valueIndex)
     }
 
@@ -109,7 +109,6 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     override fun showMessage(message: String) {
         val activity: Activity? = getApplication().currentActivity
         activity?.apply {
-
             val view: View = findViewById(R.id.coordinatorLayout)
             if (view is CoordinatorLayout) {
                 Snackbar.make(view, message, Snackbar.LENGTH_LONG)
@@ -123,7 +122,7 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     override fun showMessage(title: String, message: String, buttonText: String, callback: Callback) {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            AlertDialog.Builder(currentActivity)
+            AlertDialog.Builder(currentActivity!!)
                     .setMessage(message)
                     .setTitle(title)
                     .setNegativeButton(buttonText) { dialogInterface, _ ->
@@ -137,30 +136,25 @@ open class NavigatorImp @Inject constructor(private var mApplication: MVVMApplic
     override fun showMessage(title: String, message: String, buttonConfirmText: String, buttonCancelText: String, callback: Callback) {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            AlertDialog.Builder(currentActivity)
+            AlertDialog.Builder(currentActivity!!)
                     .setMessage(message)
                     .setTitle(title)
                     .setPositiveButton(buttonConfirmText) { dialogInterface, _ ->
-
                         callback.onResult(true)
-
                         dialogInterface.dismiss()
                     }
                     .setNegativeButton(buttonCancelText) { dialogInterface, _ ->
-
                         callback.onResult(false)
-
                         dialogInterface.dismiss()
                     }
                     .show()
-
         }
     }
 
     override fun showBusyIndicator() {
         if (mApplication.isCurrentActivityAvailable) {
             val currentActivity = mApplication.currentActivity
-            mBusyIndicator = BusyIndicator(currentActivity)
+            mBusyIndicator = BusyIndicator(currentActivity!!)
             mBusyIndicator!!.show()
         }
     }
